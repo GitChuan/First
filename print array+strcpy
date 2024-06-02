@@ -1,0 +1,17 @@
+void print_arr(char arr[])
+{
+	while (*arr)
+	{
+		printf("%c", *arr++);
+	}
+}
+
+void my_strcopy(char* destination, char arr[])
+{
+	assert(arr);
+
+	while (*arr)
+	{
+		*destination++ = *arr++;
+	}
+}
