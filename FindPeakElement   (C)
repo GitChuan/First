@@ -1,0 +1,11 @@
+int findPeakElement(int* nums, int numsLen ) {
+	int i = 0;
+	for (i = 0; i < numsLen-1; i++)
+	{
+		if (*(nums + i) > *(nums + i+1))
+		{
+			return i;
+		}
+	}
+	return numsLen -1;
+}
