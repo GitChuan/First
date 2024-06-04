@@ -1,0 +1,4 @@
+int com(const void* x, const void* y)
+{
+  return (*(int*)x - *(int*)y);  // (int*) could change into any type that from your array that you want to sort.
+}
