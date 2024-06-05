@@ -1,0 +1,6 @@
+void test02()
+{
+	char ch[] = { 'a', 'b', 'c' };
+	int width = strlen(&ch) - strlen(&ch + 1);
+	printf("%d\n", width);
+}
