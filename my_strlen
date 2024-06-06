@@ -1,0 +1,9 @@
+size_t my_strlen(char* arr)
+{
+	int count = 0;
+	while (*arr++)
+	{
+		count++;
+	}
+	return count;
+}
