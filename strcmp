@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+int my_strcmp(const char* arr1, const char* arr2)
+{
+	int total1 = 0;
+	int total2 = 0;
+	char* temp1 = arr1;
+	char* temp2 = arr2;
+	for (; *arr1; arr1++)
+	{
+		if (*arr1 != *arr2)
+		{
+			total1 += *arr1;
+		}
+		arr2++;
+	}
+	for (arr1 = temp1, arr2 = temp2; *arr2; arr2++)
+	{
+		if (*arr1 != *arr2)
+		{
+			total2 += *arr2;
+		}
+		arr1++;
+	}
+	return (total1 - total2);
+}
