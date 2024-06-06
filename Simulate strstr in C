@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <assert.h>
+
+char* my_strstr(const char* arr1, const char* arr2)
+{
+	assert(arr1 && arr2);
+	const char* p = arr1;
+	const char* s1 = arr1;
+	const char* s2 = arr2;
+
+	while (*p)
+	{
+		s1 = p;
+		s2 = arr2;
+		while (*s1!='\0'&& *s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+		if (*s2 == '\0')
+		{
+			return p;
+		}
+		p++;
+		
+	}
+	return NULL;
+}
