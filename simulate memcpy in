@@ -1,0 +1,16 @@
+#include <stdio.h>
+#include <assert.h>
+
+void* my_memcpy(void* dest, const void* source, size_t num)
+{
+	assert(dest && source);
+	void* temp = dest;
+
+	while (num--)
+	{
+		*(char*)dest = *(char*)source;
+		dest = ((char*)dest + 1);
+		source = ((char*)source + 1);
+	}
+	return temp;
+}
