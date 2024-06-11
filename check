@@ -1,0 +1,35 @@
+void check(int arr[50], int n)
+{
+	int flag = 1;
+	if (arr[0] > arr[1])
+	{
+		int i = 0;
+		for (i = 1; i < n - 1; i++)
+		{
+			if (!(arr[i] > arr[i + 1]))
+			{
+				flag = 0;
+			}
+		}
+	}
+	else if (arr[0] < arr[1])
+	{
+		int i = 0;
+		for (i = 1; i < n - 1; i++)
+		{
+			if (!(arr[i] < arr[i + 1]))
+			{
+				flag = 0;
+			}
+		}
+	}
+	if (flag)
+	{
+		printf("sorted\n");
+	}
+	else
+	{
+		printf("unsorted\n");
+	}
+	return;
+}
