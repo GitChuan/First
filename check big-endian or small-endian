@@ -1,0 +1,8 @@
+#include <stdio.h>
+
+int check()
+{
+	int a = 1;
+	int b = *(char*)&a;
+	return b;
+}
