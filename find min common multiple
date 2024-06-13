@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+int find_multiple(int m, int n)
+{
+	int max = m > n ? m : n;
+	int i = 0;
+	for (i = max;; i++)
+	{
+		if (i % m == 0 && i % n == 0)
+		{
+			return i;
+		}
+	}
+}
