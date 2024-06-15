@@ -1,0 +1,14 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main()
+{
+	int num = 1;
+#if num
+	printf("haha\n");
+#endif // num
+
+
+	getchar();
+	return 0;
+}
