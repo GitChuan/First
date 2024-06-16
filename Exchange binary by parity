@@ -1,0 +1,15 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+#define EXCHANGE(num) (((num&0x55555555)<<1)+((num&0xaaaaaaaa)>>1))
+
+int main()
+{
+	int num = 0;
+	scanf("%d", &num);
+	printf("%d", EXCHANGE(num));
+
+
+	getchar();
+	return 0;
+}
