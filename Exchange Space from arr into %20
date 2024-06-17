@@ -1,0 +1,38 @@
+char* exchange(char* arr, int size)
+{
+	int new_size = size;
+	char* ptr = calloc(size, 1);
+
+	int i = 0;
+	for (i = 0; i < size; i++)
+	{
+		if (isspace(*(arr + i)))
+		{
+			new_size += 3;
+		}
+		ptr[i] = arr[i];
+	}
+
+	ptr = realloc(ptr, new_size);
+	assert(ptr);
+
+	int left = size-1;
+	int right = new_size - 1;
+	for (i = 0; i < size; i++)
+	{
+		if (ptr[left] == ' ')
+		{
+			ptr[right--] = '0';
+			ptr[right--] = '2';
+			ptr[right--] = '%';
+			--left;
+		}
+		else
+		{
+			ptr[right--] = ptr[left--];
+		}
+	}
+	ptr[0] = ' ';
+	ptr[1] = ' ';
+	return ptr;
+}
