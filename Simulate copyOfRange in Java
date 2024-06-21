@@ -1,0 +1,24 @@
+package day01;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        int[] arr = {1, 9, 3, 4, 5};
+        int[] new_arr = copyOfRange(arr, 0, arr.length);
+        for (int i = 0; i < new_arr.length; i++) {
+            System.out.print(new_arr[i] + " ");
+        }
+    }
+
+    public static int[] copyOfRange(int[] arr, int from, int to) {
+        if (arr == null) {
+            return null;
+        }
+        int[] new_arr = new int[to - from];
+        for (int i = from; i < to; i++) {
+            new_arr[i] = arr[i];
+        }
+        return new_arr;
+    }
+
+
+}
