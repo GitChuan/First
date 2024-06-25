@@ -1,0 +1,23 @@
+package day01;
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class HelloWorld{
+    public static void main(String[] args) {
+        String str = "John is a joyboy";
+
+        int begin = 0;
+        int end = 0;
+        String sub_str = new String();
+        for (int i = 0; i < str.length(); i++) {
+            if(str.charAt(i) == ' '){
+                begin = i + 1;
+            }
+
+            ++end;
+            sub_str = str.substring(begin, end);
+        }
+        System.out.println(sub_str);
+    }
+}
