@@ -1,0 +1,52 @@
+package Math;
+
+import java.util.Scanner;
+
+public class Test {
+    public static void main(String[] args) {
+        for (int i = 10; i < 100; i++) {
+            IsIndexNum.test(i);
+        }
+    }
+}
+
+class IsPrime {
+    public IsPrime(int num) {
+        if (num <= 1) {
+            System.out.printf("%d一定要大于1\n", num);
+            return;
+        }
+
+        int sqrt = (int) Math.sqrt(num);
+        for (int i = 2; i <= sqrt; i++) {
+            if (num % i == 0) {
+                System.out.printf("%d不是质数\n", num);
+                return;
+            }
+        }
+
+        System.out.printf("%d是质数\n", num);
+    }
+}
+
+class IsIndexNum {
+    public static void test(int num) {
+        int unit = 0;
+        int temp = num;
+        while (temp != 0) {
+            ++unit;
+            temp /= 10;
+        }
+
+        temp = num;
+        int sum = 0;
+        for (int i = 0; i < unit; i++) {
+            sum += (int) Math.pow(temp % 10, unit);
+            temp /= 10;
+        }
+
+        if (sum == num) {
+            System.out.printf("%d是自幂数\n", num);
+        }
+    }
+}
