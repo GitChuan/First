@@ -1,0 +1,48 @@
+package Math;
+
+public class Test {
+    public static void main(String[] args) {
+        int[] arr = {6, 1, 2, 7, 3,9, 4, 5, 10, 8};
+        quickSort(arr, 0, arr.length-1);
+        for (int i = 0; i < arr.length; i++) {
+            System.out.printf("%d ", arr[i]);
+        }
+    }
+
+    public static void quickSort(int[] arr, int i, int j) {
+        int left = i;
+        int right = j;
+
+        if(left > right){
+            return;
+        }
+        int baseNum = arr[i];
+
+        while(left != right){
+            while(true){
+                if(right <= left || arr[right] < baseNum){
+                    break;
+                }
+                --right;
+            }
+
+            while(true){
+                if(right <= left || arr[left] > baseNum){
+                    break;
+                }
+                ++left;
+            }
+
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+        }
+
+        int temp = arr[i];
+        arr[i] = arr[left];
+        arr[left] = temp;
+
+        quickSort(arr, 0, left-1);
+        quickSort(arr, left+1, j);
+    }
+}
