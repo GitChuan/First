@@ -1,0 +1,23 @@
+package Math;
+
+public class Test {
+    public static void main(String[] args) {
+        System.out.println(findStairs(20));
+    }
+
+
+
+    public static int findStairs(int stairs){
+        if(stairs == 1){
+            return 1;
+        }
+        if(stairs == 2){
+            return 2;
+        }
+        if(stairs == 3){
+            return 4;
+        }
+        return findStairs(--stairs) + findStairs(--stairs) + findStairs(--stairs);
+    }
+}
+
