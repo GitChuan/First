@@ -1,0 +1,2 @@
+val >> n // val divide by 2^n
+val << n // val times 2^n
