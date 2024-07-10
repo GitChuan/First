@@ -1,0 +1,25 @@
+package day08;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class Test {
+    public static void main(String[] args) {
+        Set<String> s = new HashSet<>();
+        s.add("John");
+        s.add("chuan");
+        s.add("dog ge");
+        //1
+        Iterator<String> it = s.iterator();
+        while(it.hasNext()){
+            System.out.println(it.next());
+        }
+        //2
+        for (String string : s) {
+            System.out.println(string);
+        }
+        //3
+        s.forEach(s1-> System.out.println(s1));
+    }
+}
