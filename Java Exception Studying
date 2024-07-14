@@ -1,0 +1,49 @@
+package day09;
+
+
+import java.util.Scanner;
+
+public class Test {
+    public static void main(String[] args) {
+        inquire();
+    }
+
+    public static void inquire() {
+        while (true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.printf("请输入你梦想中女朋友的年龄:>");
+            String age = sc.nextLine();
+            System.out.printf("请输入你梦想中女朋友的姓名:>");
+            String name = sc.nextLine();
+            try {
+                if (check(name, age)) {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("年龄的格式有误,请重新输入数字");
+            } catch (RuntimeException e) {
+                System.out.println("姓名的长度或年龄的范围有误");
+            }
+
+        }
+    }
+
+    public static boolean check(String name, String age) {
+        if (name.length() > 15) {
+            throw new RuntimeException();
+        }
+        try {
+            int newAge = Integer.parseInt(age);
+            if (newAge > 45 || newAge < 18) {
+                throw new RuntimeException();
+            } else {
+                System.out.printf("name:%s, age:%d\n", name, newAge);
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            throw e;
+        }
+    }
+
+
+}
