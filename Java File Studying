@@ -1,0 +1,41 @@
+package day09;
+
+
+import java.io.File;
+
+public class Test {
+    public static void main(String[] args) {
+        File f = new File("C:\\Users\\chuan\\IdeaProjects\\first\\src\\day09");
+        File[] files = f.listFiles(pathname -> pathname.isDirectory() || pathname.toString().endsWith(".txt") || pathname.toString().endsWith(".avi"));
+        for (File file : files) {
+            deleteFile(file);
+        }
+    }
+
+    public static void find(File file){
+        File[] files = file.listFiles();
+        if(files != null){
+            for (File file1 : files) {
+                if(file1.isDirectory()){
+                    find(file1);
+                } else if (file1.toString().endsWith(".avi")) {
+                    System.out.println(file1);
+                }
+            }
+        }
+    }
+
+    public static void deleteFile(File dir){
+        if(dir.isDirectory()){
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()){
+                    deleteFile(file);
+                }
+                file.delete();
+            }
+        }
+        dir.delete();
+
+    }
+}
