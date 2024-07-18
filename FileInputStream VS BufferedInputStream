@@ -1,0 +1,73 @@
+package day01;
+
+import java.io.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        File source = new File("C:\\Users\\chuan\\OneDrive\\Pictures\\Screenshots\\屏幕截图 2024-05-30 204053.png");
+        File dest = new File("C:\\Users\\chuan\\IdeaProjects\\java\\src\\day01\\b.png");
+        System.out.printf("char字节流: %d\n", charInputStream(source, dest));
+        System.out.printf("arr字节流: %d\n", arrInputStream(source, dest));
+        System.out.printf("char字节缓存流: %d\n", charBufferedInputStream(source, dest));
+        System.out.printf("arr字节缓存流: %d\n", arrBufferedInputStream(source, dest));
+
+    }
+
+    public static long charInputStream(File source, File dest) throws IOException{
+        FileInputStream fileInputStream = new FileInputStream(source);
+        FileOutputStream fileOutputStream = new FileOutputStream(dest);
+        int b;
+        long begin = System.currentTimeMillis();
+        while ((b = fileInputStream.read()) != -1){
+            fileOutputStream.write(b);
+        }
+        long end = System.currentTimeMillis();
+        fileOutputStream.close();
+        fileInputStream.close();
+        return end - begin;
+    }
+
+    public static long arrInputStream(File source, File dest) throws IOException{
+        FileInputStream fileInputStream = new FileInputStream(source);
+        FileOutputStream fileOutputStream = new FileOutputStream(dest);
+        int b;
+        byte[] bytes = new byte[1024];
+        long begin = System.currentTimeMillis();
+        while ((b = fileInputStream.read(bytes)) != -1){
+            fileOutputStream.write(bytes, 0, b);
+        }
+        long end = System.currentTimeMillis();
+        fileOutputStream.close();
+        fileInputStream.close();
+        return end - begin;
+    }
+
+    public static long charBufferedInputStream(File source, File dest) throws IOException{
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(source));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(dest));
+        int b;
+        long begin = System.currentTimeMillis();
+        while ((b = bufferedInputStream.read()) != -1){
+            bufferedOutputStream.write(b);
+        }
+        long end = System.currentTimeMillis();
+        bufferedOutputStream.close();
+        bufferedInputStream.close();
+        return end-begin;
+    }
+
+    public static long arrBufferedInputStream(File source, File dest) throws IOException{
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(source));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(dest));
+        int b;
+        byte[] bytes = new byte[1024];
+        long begin = System.currentTimeMillis();
+        while ((b = bufferedInputStream.read(bytes)) != -1){
+            bufferedOutputStream.write(bytes, 0, b);
+        }
+        long end = System.currentTimeMillis();
+        bufferedOutputStream.close();
+        bufferedInputStream.close();
+        return end-begin;
+    }
+}
