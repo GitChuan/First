@@ -1,0 +1,41 @@
+package day01;
+
+import java.io.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException{
+        File file = new File("C:\\Users\\chuan\\IdeaProjects\\java\\src\\day01\\aaa");
+        file.mkdir();
+
+        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\chuan\\IdeaProjects\\java\\src\\day01\\aaa\\a.txt");
+        fileOutputStream.write("a.txt".getBytes());
+        fileOutputStream.close();
+
+        File file2 = new File("C:\\Users\\chuan\\IdeaProjects\\java\\src\\day01\\aaa\\bbb");
+        file2.mkdir();
+
+        FileOutputStream fileOutputStream1 = new FileOutputStream("C:\\Users\\chuan\\IdeaProjects\\java\\src\\day01\\aaa\\bbb\\b.txt");
+        fileOutputStream1.write("b.txt".getBytes());
+
+        test(file, new File("C:\\Users\\chuan\\IdeaProjects\\java\\src\\day01\\bbb"));
+
+    }
+
+    public static void test(File source, File dest) throws IOException{
+        File dir = dest;
+        dir.mkdir();
+        for (File file : source.listFiles()) {
+            if(file.isDirectory()){
+                test(file, new File(dest+"\\"+file.getName()));
+            } else {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                FileOutputStream fileOutputStream = new FileOutputStream(dest+"\\"+file.getName());
+                int b;
+                while ((b = fileInputStream.read()) != -1){
+                    fileOutputStream.write(b);
+                }
+            }
+        }
+    }
+}
