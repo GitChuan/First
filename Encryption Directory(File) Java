@@ -1,0 +1,30 @@
+public static void encryption(File dir) throws IOException{
+        if(dir.isDirectory()){
+            for (File file : dir.listFiles()) {
+                if(file.isDirectory()){
+                    encryption(file);
+                } else {
+                    FileInputStream fileInputStream = new FileInputStream(file);
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    int b;
+                    while((b = fileInputStream.read()) != -1){
+                        fileOutputStream.write(b^2);
+                    }
+                }
+            }
+        } else {
+            FileInputStream fileInputStream = new FileInputStream(dir);
+            int b;
+            ArrayList<Integer> arrayList = new ArrayList<>();
+            while ((b = fileInputStream.read()) != -1){
+                arrayList.add(b);
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(dir);
+            for (Integer i : arrayList) {
+                fileOutputStream.write(i^2);
+            }
+            fileOutputStream.close();
+            fileInputStream.close();
+        }
+    }
