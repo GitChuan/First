@@ -1,0 +1,35 @@
+public static void toZip(File source, File dest) throws IOException{
+        if(source.isDirectory()){
+            File dir = new File(dest, source.getName());
+            dir.mkdir();
+            for (File file : source.listFiles()) {
+                if(file.isDirectory()){
+                    toZip(file, dir);
+                } else {
+                    FileInputStream fis = new FileInputStream(file); // read
+                    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(new File(dir, file.getName().split("\\.")[0] + ".zip"))); // zip
+                    ZipEntry zipEntry = new ZipEntry(file.toString());
+                    zos.putNextEntry(zipEntry);
+                    int b;
+                    while ((b = fis.read()) != -1){
+                        zos.write(b);
+                    }
+                    zos.closeEntry();
+                    zos.close();
+                    fis.close();
+                }
+            }
+        } else {
+            FileInputStream fis = new FileInputStream(source);
+            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(new File(dest, source.getName().split("\\.")[0] + ".zip")));
+            ZipEntry zipEntry = new ZipEntry(source.toString());
+            zos.putNextEntry(zipEntry);
+            int b;
+            while ((b = fis.read()) != -1){
+                zos.write(b);
+            }
+            zos.closeEntry();
+            zos.close();
+            fis.close();
+        }
+    }
