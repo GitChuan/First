@@ -1,0 +1,19 @@
+public static void unZip(File source, File dest) throws IOException{
+        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(source));
+        ZipEntry entry;
+        while ((entry = zipInputStream.getNextEntry()) != null){
+            if(entry.isDirectory()){
+                File dir = new File(dest, entry.toString());
+                dir.mkdirs();
+            } else {
+                File file = new File(dest, entry.toString());
+                try {
+                    file.createNewFile();
+                } catch (IOException e){
+                    File f = new File(dest, entry.toString().split("/")[0]);
+                    f.mkdir();
+                    file.createNewFile();
+                }
+            }
+        }
+    }
