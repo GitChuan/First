@@ -1,0 +1,26 @@
+package day07;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Field;
+
+public class Main {
+    public static void main(String[] args) throws IOException, IllegalAccessException {
+        Student s = new Student(18, "Chuan");
+        saveObj(s);
+    }
+
+    public static void saveObj(Object o) throws IOException, IllegalAccessException {
+        Class oClass = o.getClass();
+        Field[] declaredFields = oClass.getDeclaredFields();
+        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\chuan\\OneDrive\\Desktop\\a.txt");
+        for (Field declaredField : declaredFields) {
+            String name = declaredField.getName();
+            declaredField.setAccessible(true);
+            String info = name + "="+declaredField.get(o) + "\r\n";
+            fileOutputStream.write(info.getBytes());
+        }
+        fileOutputStream.close();
+
+    }
+}
