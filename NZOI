@@ -1,0 +1,88 @@
+int modifyFile(vector<pair<long long, int>>* disks, vector<long long>* fileInfo, int searchNum, long long fileSize) {
+	int beginIndex = 0;
+	for (int i = 0; i < disks->size(); i++) {
+		if (searchNum == disks->at(i).second) {
+			beginIndex = i;
+			break;
+		}
+	}
+	
+	int diskNum = ceil(fileInfo->at(searchNum) / 1474560.0);  // 原本所占的disk
+
+	int endIndex = beginIndex + diskNum;  // point to the first disk which does not contain the file
+	int requireDiskNum = ceil(fileSize / 1474560.0); // 需要多少个disk
+	int recordPos;
+
+	// 如果要修改的文件大小小于原本大小
+	if (fileSize < fileInfo->at(searchNum-1)) {
+		int lastSize = fileSize % 1474560;
+		for (int i = beginIndex; i < beginIndex+ requireDiskNum - 1; i++) {
+			disks->at(i).first = 0;
+			disks->at(i).second = searchNum;
+		}
+		disks->at(beginIndex + requireDiskNum - 1).first -= lastSize;
+		disks->at(beginIndex + requireDiskNum - 1).second = searchNum;
+
+		for (int i = beginIndex + requireDiskNum; i < endIndex; i++) {
+			disks->at(i).first = 1474560;
+			disks->at(i).second = -1;
+		}
+		return beginIndex;
+	}
+	// 如果修改文件内容大于原本的
+	else {
+		int addingIndex = beginIndex + requireDiskNum; // 指向最后一个需要的disk的后一个
+		//从原本最后一个disk的后一个遍历到需要到的最后一个
+		bool isFree = true;
+		for (int i = endIndex; i < addingIndex; i++) {
+			if (disks->at(i).second != -1) {
+				isFree = false;
+				recordPos = i;
+				break;
+			}
+		}
+		//如果后面可以直接添加
+		if (isFree) {
+			long long extraSize = fileSize - disks->at(endIndex - 1).first;
+			disks->at(endIndex - 1).first = 0;
+			requireDiskNum = ceil(extraSize / 1474560.0);
+			int newLastIndex = beginIndex + requireDiskNum; // point to next of the last disk.
+
+			for (int i = endIndex; i < newLastIndex - 1; i++) {
+				disks->at(i).first = 0;
+				disks->at(i).second = searchNum;
+			}
+			disks->at(newLastIndex - 1).first = extraSize % 1474560;
+			disks->at(newLastIndex - 1).second = searchNum;
+			return beginIndex;
+		}
+		// 如果后面不能直接添加
+		else {
+			int extraSpace = 0;
+			int endPos; // no after one pointer!!
+			for (int i = recordPos + 1; i < disks->size(); i++) {
+				if (disks->at(i).second == -1) {
+					if (requireDiskNum == ++extraSpace) {
+						endPos = i;
+						break;
+					}
+				}
+				else {
+					extraSpace = 0;
+				}
+			}
+			int beginPos = endPos - requireDiskNum + 1;
+			// add
+			for (int i = beginPos; i < endPos; i++) {
+				disks->at(i).first = 0;
+				disks->at(i).second = searchNum;
+			}
+			disks->at(endPos).first = fileSize % 1474560;
+			disks->at(endPos).second = searchNum;
+			return beginPos;
+		}
+	}
+
+	// update file size
+	fileInfo->at(searchNum - 1) = fileSize;
+}
