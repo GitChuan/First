@@ -1,0 +1,38 @@
+import java.util.LinkedList;
+
+public class Main {
+    static LinkedList<Integer> linkedListA = new LinkedList<>();
+    static LinkedList<Integer> linkedListB = new LinkedList<>();
+    static LinkedList<Integer> linkedListC = new LinkedList<>();
+
+    static void init(int n){
+        for (int i = n; i >= 1; i--) {
+            linkedListA.addLast(i);
+        }
+    }
+
+    private static void print(){
+        System.out.println("-----------");
+        System.out.println(linkedListA);
+        System.out.println(linkedListB);
+        System.out.println(linkedListC);
+    }
+
+    public static void main(String[] args) {
+        init(30);
+        long begin = System.currentTimeMillis();
+        move(30, linkedListA, linkedListB, linkedListC);
+        long end = System.currentTimeMillis();
+        print();
+        System.out.println("Runtime: " + (end - begin));
+    }
+
+    public static void move(int n, LinkedList<Integer> A,
+                            LinkedList<Integer> B,
+                            LinkedList<Integer> C){
+        if(n == 0) return;
+        move(n-1, A, C, B);
+        C.addLast(A.removeLast());
+        move(n-1, B, A, C);
+    }
+}
