@@ -1,0 +1,104 @@
+package Tree;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(null, 1, null);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.right.left = new TreeNode(5);
+        root.right.right = new TreeNode(6);
+        postOrder(root);
+    }
+
+    public static void preInOrder(TreeNode root, List<Integer> list) {
+        if (root == null) return;
+        TreeNode current = root;
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        while (current != null || !stack.isEmpty()) {
+            if (current != null) {
+//                System.out.print("去" + current.val + " ");
+                stack.push(current);
+                current = current.left;
+            } else {
+                TreeNode pop = stack.pop();
+                list.add(pop.val);
+                current = pop.right;
+            }
+        }
+    }
+
+    public static void postOrder(TreeNode root){
+        if (root == null) return;
+        TreeNode current = root;
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        TreeNode pop = null;
+        while (current != null || !stack.isEmpty()) {
+            if (current != null) {
+                stack.push(current);
+                current = current.left;
+            } else {
+                TreeNode peek = stack.peek();
+                if(peek.right == null || peek.right == pop){
+                    pop = stack.pop();
+                    System.out.print(pop.val + " ");
+                } else {
+                    current = peek.right;
+                }
+            }
+        }
+    }
+
+    public static void postOrder(TreeNode root, List<Integer> list){
+        if (root == null) return;
+        TreeNode current = root;
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        TreeNode pop = null;
+        while (current != null || !stack.isEmpty()) {
+            if (current != null) {
+                stack.push(current);
+                current = current.left;
+            } else {
+                TreeNode peek = stack.peek();
+                if(peek.right == null || peek.right == pop){
+                    pop = stack.pop();
+                    list.add(pop.val);
+                } else {
+                    current = peek.right;
+                }
+            }
+        }
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        preInOrder(root, list);
+        return list;
+    }
+
+    public static void preOrderRecursion(TreeNode node, List<Integer> list) {
+        if (node == null) return;
+        list.add(node.val);
+        preOrderRecursion(node.left, list);
+        preOrderRecursion(node.right, list);
+    }
+
+    public static void inOrderRecursion(TreeNode node) {
+        if (node == null) return;
+        inOrderRecursion(node.left);
+        System.out.println(node.val);
+        inOrderRecursion(node.right);
+    }
+
+
+    public static void postOrderRecursion(TreeNode node, List<Integer> list) {
+        if (node == null) return;
+        postOrderRecursion(node.left, list);
+        postOrderRecursion(node.right, list);
+        list.add(node.val);
+    }
+}
