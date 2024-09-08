@@ -1,0 +1,197 @@
+package BinarySearchTree;
+
+public class BinarySearchTree {
+    private BSTNode root;
+
+    private static class BSTNode {
+        int key;
+        Object value;
+        BSTNode left;
+        BSTNode right;
+
+        public BSTNode() {
+        }
+
+        public BSTNode(int key) {
+            this.key = key;
+        }
+
+        public BSTNode(int key, Object value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public BSTNode(int key, Object value, BSTNode left, BSTNode right) {
+            this.key = key;
+            this.value = value;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public Object get(int key) {
+        BSTNode node = root;
+        while (node != null) {
+            if (key < node.key) {
+                node = node.left;
+            } else if (key > node.key) {
+                node = node.right;
+            } else {
+                return node.value;
+            }
+        }
+        return null;
+    }
+
+
+    public Object min() {
+        BSTNode p = root;
+        if (p == null) return null;
+        while (p.left != null) {
+            p = p.left;
+        }
+        return p.value;
+    }
+
+    public Object max() {
+        BSTNode p = root;
+        if (p == null) return null;
+        while (p.right != null) {
+            p = p.right;
+        }
+        return p.value;
+    }
+
+    public void put(int key, Object val) {
+        if (root == null) {
+            root = new BSTNode(key, val);
+            return;
+        }
+
+        BSTNode node = root;
+        BSTNode parent = null;
+        while (node != null) {
+            parent = node;
+            if (key < node.key) {
+                node = node.left;
+            } else if (key > node.key) {
+                node = node.right;
+            } else {
+                node.value = val;
+                return;
+            }
+        }
+        if (parent.left == null) {
+            parent.left = new BSTNode(key, val);
+        } else {
+            parent.right = new BSTNode(key, val);
+        }
+    }
+
+    public Object predecessor(int key) {
+        BSTNode node = root;
+        BSTNode parent = null;
+        while (node != null) {
+            if (key < node.key) {
+                node = node.left;
+            } else if (key > node.key) {
+                parent = node;
+                node = node.right;
+            } else {
+                break;
+            }
+        }
+        if (node == null) return null;
+
+        if (node.left != null) {
+            BSTNode p = node.left;
+            while (p.right != null) {
+                p = p.right;
+            }
+            return p.value;
+        } else {
+            return parent != null ? parent.value : null;
+        }
+    }
+
+    public Object successor(int key) {
+        BSTNode node = root;
+        BSTNode parent = null;
+        while (node != null) {
+            if (key < node.key) {
+                parent = node;
+                node = node.left;
+            } else if (key > node.key) {
+                node = node.right;
+            } else {
+                break;
+            }
+        }
+        if (node == null) return null;
+
+        if (node.right != null) {
+            BSTNode p = node.right;
+            while (p.left != null) {
+                p = p.left;
+            }
+            return p.value;
+        } else {
+            return parent != null ? parent.value : null;
+        }
+    }
+
+    public Object delete(int key) {
+        BSTNode node = root;
+        BSTNode parent = null;
+        while (node != null) {
+            if (key < node.key) {
+                parent = node;
+                node = node.left;
+            } else if (key > node.key) {
+                parent = node;
+                node = node.right;
+            } else {
+                break;
+            }
+        }
+        if (node == null) return null;
+
+        if (node.left == null) {
+            shift(parent, node, node.right);
+        } else if (node.right == null) {
+            shift(parent, node, node.left);
+        } else {
+            BSTNode p = node.right;
+            BSTNode parentOfP = node;
+            while (p.left != null) {
+                parentOfP = p;
+                p = p.left;
+            }
+            // p now is the successor and doesn't have left son(maybe have right son)
+
+            if (p.right != null) {  // if p does have right son
+                shift(parentOfP, p, p.right); // p no way has left son
+            }
+            shift(parent, node, p);
+            if (parent != null) {
+                p.left = parent.left;
+                p.right = parent.right == null ? null : parent.right;
+            }
+
+        }
+        return node.value;
+    }
+
+    private void shift(BSTNode parent, BSTNode deleted, BSTNode child) {
+        if (parent == null) {
+            root = child;
+            return;
+        }
+
+        if (parent.right == deleted) { // right son
+            parent.right = child;
+        } else { // left son
+            parent.left = child;
+        }
+    }
+}
