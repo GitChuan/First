@@ -1,0 +1,27 @@
+public class Main {
+    public static int f(int i, int j){
+        if(j == 0 || i == j){
+            return 1;
+        }
+
+        return f(i-1, j-1) + f(i-1, j);
+    }
+
+    public static void print(int n){
+        for (int i = 0; i < n; i++) {
+            int count = (n-i-1)<<1;
+            for (int m = 0; m < count; m++){
+                System.out.printf(" ");
+            }
+
+            for (int j = 0; j < i+1; j++) {
+                System.out.printf("%-4d ", f(i, j));
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        print(10);
+    }
+}
